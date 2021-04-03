@@ -1,6 +1,6 @@
 class Recipe:
     def __init__(self, name, cooking_lvl, cooking_time, ingredients, description, recipe_type):
-        if type(name) != str or len(nam) == 0:
+        if type(name) != str or len(name) == 0:
             print("name is not string")
             exit(1)
         if type(cooking_lvl) != int or cooking_lvl not in range(1, 6):
@@ -26,6 +26,6 @@ class Recipe:
         self.recipe_type = recipe_type
     def __str__(self):
         """Return the string to print with the recipe info"""
-        txt = "name " + self.name + " cooking_lvl" + self.cooking_lvl + " cooking_time" + self.cooking_time + " ingredients" + self.ingredients + " description" + self.description + " recipe_type" + self.recipe_type
+        txt = "name: " + self.name + " cooking_lvl: " + str(self.cooking_lvl) + " cooking_time: " + str(self.cooking_time) + " ingredients: " + str(self.ingredients) + " description: " + self.description + " recipe_type: " + self.recipe_type
         """Your code goes here"""
         return txt

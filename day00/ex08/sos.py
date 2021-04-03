@@ -5,5 +5,6 @@ if len(sys.argv) < 2:
 if any(c != ' ' and not c.isalnum() for elem in sys.argv[1:] for c in elem):
     print("ERROR")
     exit(1)
+    
 print(*[dictt[c.upper()] for elem in sys.argv[1:] for c in elem + " "][:-1])
 
