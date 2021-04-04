@@ -21,5 +21,8 @@ while inp != goal:
     if inp < goal:
         print("Too low!")
     count += 1
-print("Congratulations, you've got it!")
-print("You won in {} attempts!".format(count))
+if count != 1:
+    print("Congratulations, you've got it!")
+    print("You won in {} attempts!".format(count))
+else:
+    print("Congratulations! You got it on your first try!")

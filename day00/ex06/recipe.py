@@ -57,11 +57,13 @@ def show_promp():
 
 while True:
     show_promp()
-    inp = input(">>")
-    if (not inp.isdigit() or int(inp) < 1 or int(inp) > 5):
-        print("""This option does not exist, please type the corresponding number.
-To exit, enter 5.""")
-        continue
+    while True:
+        inp = input(">>")
+        if (not inp.isdigit() or int(inp) < 1 or int(inp) > 5):
+            print("""This option does not exist, please type the corresponding number.
+    To exit, enter 5.""")
+        else:
+            break
     if int(inp) == 1:
         name = input("name: ")
         ll=[]
@@ -76,7 +78,7 @@ To exit, enter 5.""")
     elif int(inp) == 2:
         delete_recipe(input('name of recipe to delete : '))
     elif int(inp) == 3:
-        print_recipe(input('name of recipe to print : '))
+        print_recipe(input('Please enter the recipe\'s name to get its details:\n>>'))
     elif int(inp) == 4:
         print_all_recipe()
     elif int(inp) == 5:

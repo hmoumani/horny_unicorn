@@ -12,4 +12,4 @@ if (int(sys.argv[1]) == 0):
 elif (int(sys.argv[1]) % 2 == 0):
     print("I'm Even.")
 else:
-    print("I'm odd.")
+    print("I'm Odd.")
