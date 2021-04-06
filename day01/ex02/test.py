@@ -27,16 +27,22 @@ print("*" * 42)
 v1 = Vector((13,37))
 print(v1.values)
 g = 13 / v1
-print(g.values)
+# print(g.values)
 
-print("*" * 42)
+print("l" * 42)
 
 v1 = Vector((13,37))
 print(v1.values)
 g = 2 * v1
 print(g.values)
+
+g = v1 * 2
+print(g.values)
+
 g = Vector(3) * Vector(3)
 print(g)
 
 print(str(v1))
 print(repr(v1))
+
+

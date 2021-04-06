@@ -9,6 +9,7 @@ class Vector:
         elif type(param) == tuple:
             self.values = [float(elem) for elem in list(range(param[0], param[1]))]
             self.size = len(self.values)
+
     def __add__(self, x):
         if type(x) == int:
             return Vector([elem + x for elem in self.values])
@@ -20,6 +21,7 @@ class Vector:
         return print("undefined")
         
     __radd__ = __add__
+
     def __sub__(self, x):
         if type(x) == int:
             return Vector([elem - x for elem in self.values])
@@ -50,11 +52,6 @@ class Vector:
         
 
     def __rtruediv__(self, x):
-        if type(x) == int:
-            return Vector([x  / elem for elem in self.values])
-        elif type(x) == Vector:
-            print("cannot devide two Vectors")
-            return None
         return print("undefined")
         
     def __mul__(self, x):
@@ -67,11 +64,12 @@ class Vector:
             return sum([x.values[i] * self.values[i] for i in range(self.size)])
         return print("undefined")
     
-    def __rmul__(self, x):
-        if type(x) == int:
-            return Vector([elem * x for elem in self.values])
-        return print("undefined")
-    def __str__(self):
+    # def __rmul__(self, x):
+    #     if type(x) == int:
+    #         return Vector([elem * x for elem in self.values])
+    #     return print("undefined")
+    __rmul__ = __mul__
+    def __str__(self):  
         return "elements : {}, size : {}".format(self.values, self.size)
 
     def __repr__(self):

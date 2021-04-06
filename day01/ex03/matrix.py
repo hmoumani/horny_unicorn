@@ -55,6 +55,8 @@ class Matrix:
 
     def __truediv__(self, x):
         if type(x) == int:
+            if x == 0:
+                return print("undefined")
             return Matrix([[num / x for num in elem] for elem in self.data])
         else:
             return print("undefined")
