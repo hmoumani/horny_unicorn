@@ -9,7 +9,7 @@ def ft_progress(lst):
     if l_lst % 2 == 0: 
         add=0
         lst = lst + [lst[-1] + 1]
-    for i in lst:
+    for i in range(1, l_lst + 1):
         now = time()
         time_done = now - start
         estimated = 0
@@ -38,19 +38,25 @@ def ft_progress(lst):
         print('{:.2f}'.format(scnd) + 's', end='\r')
         yield i
 
+if __name__ == "__main__":
+    listy = range(3333)
+    ret = 0
+    for elem in ft_progress(listy):
+        ret += elem
+        sleep(0.005)
+    print()
+    print(ret)
 
-listy = range(3333)
-ret = 0
-for elem in ft_progress(listy):
-    ret += elem
-    sleep(0.005)
-print()
-print(ret)
+    listy = range(1000)
+    ret = 0
+    for elem in ft_progress(listy):
+        ret += (elem + 3) % 5
+        sleep(0.01)
+    print()
+    print(ret)
+    
+    
+# current / total * size
 
-listy = range(1000)
-ret = 0
-for elem in ft_progress(listy):
-    ret += (elem + 3) % 5
-    sleep(0.01)
-print()
-print(ret)
+# x -> size
+# current / total

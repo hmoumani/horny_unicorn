@@ -1,3 +1,3 @@
-phrase = "The right format"
+kata = "The right format"
 
-print('{:->42}'.format(phrase), end="")
+print('{:->42}'.format(kata), end="")

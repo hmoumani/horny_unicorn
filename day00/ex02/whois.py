@@ -2,9 +2,14 @@ import sys
 
 if len(sys.argv) < 2:
     exit()
-
-if len(sys.argv) > 2 or not sys.argv[1].isdigit():
-    print("ERROR")
+try:
+    assert len(sys.argv) == 2, "more than one argument are provided"
+    int(sys.argv[1])
+except AssertionError as e:
+    print("AssertionError:", e)
+    exit()
+except ValueError as e:
+    print("AssertionError: argument is not an integer")
     exit()
 
 if (int(sys.argv[1]) == 0):

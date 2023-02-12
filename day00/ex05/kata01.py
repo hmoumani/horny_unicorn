@@ -1,8 +1,8 @@
-languages = {
+kata = {
     'Python': 'Guido van Rossum',
     'Ruby': 'Yukihiro Matsumoto',
-    'PHP': 'Rasmus Lerdorf',
-    }
+    'PHP': 'Rasmus Lerdorf'
+}
 
-for key in languages.keys():
-    print("{} was created by {}".format(key, languages[key]))
+for key, value in kata.items():
+    print("{} was created by {}".format(key, value))

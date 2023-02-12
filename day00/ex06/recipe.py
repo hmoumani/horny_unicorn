@@ -14,7 +14,6 @@ cookbook= {
         'meal' : 'lunch',
         'prep_time' : 15
     }
-
 }
 
 def print_recipe(name):
@@ -22,7 +21,7 @@ def print_recipe(name):
         print("recipe does not exist")
         return None
     print("Recipe for " + name)
-    print('Ingredients list: ', cookbook[name]['ingredients'])
+    print('Ingredients list: ', ', '.join(cookbook[name]['ingredients']))
     print('To be eaten for', cookbook[name]['meal']+ ".")
     print('Takes {} minutes of cooking.'.format(cookbook[name]['prep_time']))
 
@@ -41,10 +40,12 @@ def add_recipe(name="name", ingredients=[], meal='lunch', prep_time=20):
     }
 
 def print_all_recipe():
-    for key in cookbook.keys():
-        print("*" * 40)
-        print_recipe(key)
-        print("*" * 40)
+    if not cookbook:
+        print("cookbook is empty")
+        return None
+    print("all available recipes:", ', '.join(cookbook.keys()) )
+
+
 
 
 def show_promp():
@@ -56,32 +57,35 @@ def show_promp():
 5: Quit""")
 
 while True:
-    show_promp()
-    while True:
-        inp = input(">>")
-        if (not inp.isdigit() or int(inp) < 1 or int(inp) > 5):
-            print("""This option does not exist, please type the corresponding number.
-    To exit, enter 5.""")
-        else:
-            break
-    if int(inp) == 1:
-        name = input("name: ")
-        ll=[]
+    try:
+        show_promp()
         while True:
-            ingr = input('enter ingredients, [tupe 0 in the end of the list]')
-            if ingr == '0':
+            inp = input(">>")
+            if (not inp.isdigit() or int(inp) < 1 or int(inp) > 5):
+                print("""This option does not exist, please type the corresponding number.
+        To exit, enter 5.""")
+            else:
                 break
-            ll.append(ingr)
-        meal = input("meal :")
-        prepa_time = int(input("preparation time: "))
-        add_recipe(name, ll, meal, prepa_time)
-    elif int(inp) == 2:
-        delete_recipe(input('name of recipe to delete : '))
-    elif int(inp) == 3:
-        print_recipe(input('Please enter the recipe\'s name to get its details:\n>>'))
-    elif int(inp) == 4:
-        print_all_recipe()
-    elif int(inp) == 5:
-        print('Cookbook closed.')
-        exit()
-    
+        if int(inp) == 1:
+            name = input("name: ")
+            ll=[]
+            while True:
+                ingr = input('enter ingredients, [tupe 0 in the end of the list]')
+                if ingr == '0':
+                    break
+                if ingr not in ll and len(ingr) > 0:
+                    ll.append(ingr)
+            meal = input("meal :")
+            prepa_time = int(input("preparation time: "))
+            add_recipe(name, ll, meal, prepa_time)
+        elif int(inp) == 2:
+            delete_recipe(input('name of recipe to delete : '))
+        elif int(inp) == 3:
+            print_recipe(input('Please enter the recipe\'s name to get its details:\n>>'))
+        elif int(inp) == 4:
+            print_all_recipe()
+        elif int(inp) == 5:
+            print('Cookbook closed.')
+            exit()
+    except Exception:
+        print("Invalid input, please try again")
