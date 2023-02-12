@@ -3,7 +3,7 @@ if len(sys.argv) < 2 :
     exit()
 
 final_list = []
-for elem in [elem.split() for elem in sys.argv]:
+for elem in [elem.split() if elem.split() else [" "] for elem in sys.argv]:
     final_list.extend(elem)
 
 final_list = final_list[1::][::-1]
