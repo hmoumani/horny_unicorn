@@ -1,46 +1,52 @@
 import datetime
 from recipe import Recipe
+
 class Book:
-    def __init__(self, name, last_update, creation_date, recipes_list):
-        if type(name) != str:
+    def __init__(self, name: str) -> None:
+        if not isinstance(name, str) or len(name) == 0:
             print("name is not valide!")
             exit(1)
-        if type(last_update) != datetime.datetime:
-            print("last_update is not valide!")
-            exit(1)
-        if type(creation_date) != datetime.datetime:
-            print("creation_date is not valide!")
-            exit(1)
-        if type(recipes_list) != dict or len(recipes_list) != 3 or not all([elem in ["starter", "lunch", "dessert"] for elem in recipes_list.keys()]):
-            print("recipes_list is not valide!")
-            exit(1)
         self.name = name
-        self.last_update = last_update
-        self.creation_date = creation_date
-        self.recipes_list = recipes_list
+        self.last_update = datetime.datetime.now()
+        self.creation_date = self.last_update
+        self.recipes_list = {
+            "starter": [],
+            "lunch": [],
+            "dessert": []
+        }
+
     def get_recipe_by_name(self, name):
-        """Print a recipe with the name `name` and return the instance"""
-        # if not any(name == nname for elem in self.recipes_list for nname in elem.name )
-        #     print("undefined name")
-        #     return None
-        for key in self.recipes_list.keys():
-            for elem in self.recipes_list[key]:
-                if name == elem.name:
-                    self.recipes_list[key].__str__()
-
+        """Prints a recipe with the name \texttt{name} and returns the instance"""
+        results = map(lambda recipes: filter(lambda x: x.name == name, recipes),
+                    self.recipes_list.values())
+        recipes = [recipe for meal_type in results for recipe in meal_type]
+        if not recipes:
+            print("recipe not found!")
+            return None
+        print(recipes[0])
+        return recipes[0]
+    
     def get_recipes_by_types(self, recipe_type):
-        """Get all recipe names for a given recipe_type """
-        ret = []
-        for key in self.recipes_list.keys():
-            for elem in self.recipes_list[key]:
-                if elem.recipe_type == recipe_type:
-                    ret.append(elem.name)
-        return ret
-
+        """Get all recipe names for a given recipe_type """ 
+        if recipe_type not in self.recipes_list:
+            print("recipe type not found!")
+            return None
+        return [item.name for item in self.recipes_list[recipe_type]]
+    
     def add_recipe(self, recipe):
         """Add a recipe to the book and update last_update"""
-        if (Recipe != type(recipe) or recipe.recipe_type not in self.recipes_list.keys()):
-            print("invalide recipe type")
-            exit(1)
+        if not isinstance(recipe, Recipe):
+            print("recipe is not valide!")
+            return None
+        if not recipe.recipe_type in self.recipes_list:
+            print("recipe type not found!")
+            return None
         self.recipes_list[recipe.recipe_type].append(recipe)
-        print(self.recipes_list[recipe.recipe_type][0].__str__())
+        self.last_update = datetime.datetime.now()
+
+if __name__ == '__main__':
+    book = Book('book')
+
+    book.get_recipe_by_name('cake')
+    
+    print(book.get_recipes_by_types('lunfwefwech'))
