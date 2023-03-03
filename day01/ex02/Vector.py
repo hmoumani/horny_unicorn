@@ -10,6 +10,12 @@ class Vector:
             self.values = param
             self.shape = (len(param), len(param[0]) if param else 0)
         elif isinstance(param, int):
+            if param < 0:
+                raise ValueError("param should be a positive integer")
+            if param == 0:
+                self.values = []
+                self.shape = (0, 0)
+                return
             self.values = [[float(i)] for i in range(param)]
             self.shape = (param, 1)
         elif isinstance(param, tuple):
