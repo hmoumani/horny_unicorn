@@ -80,3 +80,6 @@ class Vector:
     
     def __str__(self) -> str:
         return str(self.values)
+    
+    def __repr__(self) -> str:
+        return str(self.values)
