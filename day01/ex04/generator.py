@@ -13,7 +13,10 @@ def shuffle_lst(spl):
     return ret
 
 def generator(text, sep=" ", option=None):
-    if type(text) != str or ((option not in ["shuffle", "unique", "ordered"]) and option != None):
+    '''Splits the text according to sep value and yield the substrings.
+        option precise if a action is performed to the substrings before it is yielded.
+    '''
+    if not isinstance(text, str) or ((option not in ["shuffle", "unique", "ordered"]) and option != None):
         yield "Error"
         return None
     spl = text.split(sep)
@@ -26,31 +29,33 @@ def generator(text, sep=" ", option=None):
     for elem in spl:
         yield elem
 
+if __name__ == "__main__":
+    text = "Le Lorem Ipsum est simplement du faux texte."
+    
+    print("*" * 21, "Test 1: option=None", "*" * 21)
 
-text = "Le Lorem Ipsum est simplement du faux texte."
+    for word in generator(text, sep=" "):
+        print(word)
 
-for word in generator(text, sep=" "):
-    print(word)
+    print("*" * 21, "Test 2: option=\"shuffle\"", "*" * 21)
 
-print("*" * 42)
+    for word in generator(text, sep=" ", option="shuffle"):
+        print(word)
 
-for word in generator(text, sep=" ", option="shuffle"):
-    print(word)
+    print("*" * 21, "Test 2: option=\"ordered\"", "*" * 21)
 
-print("*" * 42)
+    for word in generator(text, sep=" ", option="ordered"):
+        print(word)
 
-for word in generator(text, sep=" ", option="ordered"):
-    print(word)
+    print("*" * 21, "Test 2: option=\"unique\"", "*" * 21)
 
-print("*" * 42)
+    text = "Lorem Ipsum Lorem Ipsum"
+    for word in generator(text, sep=" ", option="unique"):
+        print(word)
 
-text = "Lorem Ipsum Lorem Ipsum"
-for word in generator(text, sep=" ", option="unique"):
-    print(word)
-
-print("*" * 42)
+    print("*" * 21, "Test 2: option=None, sep=\".\"", "*" * 21)
 
 
-text = 1.0
-for word in generator(text, sep="."):
-    print(word)
+    text = 1.0
+    for word in generator(text, sep="."):
+        print(word)
