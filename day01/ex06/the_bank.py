@@ -3,111 +3,124 @@ import random
 
 # in the_bank.py
 class Account(object):
-
     ID_COUNT = 1
-
     def __init__(self, name, **kwargs):
-        self.id = self.ID_COUNT
-        self.name = name
         self.__dict__.update(kwargs)
-        if hasattr(self, 'value'):
-            self.value = 0
+        self.id = self.ID_COUNT
         Account.ID_COUNT += 1
-    
+        self.name = name
+        if not hasattr(self, 'value'):
+            self.value = 0
+        if self.value < 0:
+            raise AttributeError("Attribute value cannot be negative.")
+        if not isinstance(self.name, str):
+            raise AttributeError("Attribute name must be a str object.")
     def transfer(self, amount):
         self.value += amount
-    def give(self, amount):
-        self.value -= amount
-
-    # in the_bank.py
+    
+def is_valid(account):
+    if len(dir(account)) % 2 == 0: # an even number of attributes,
+        return False
+    if any(attr.startswith('b') for attr in dir(account)): # an attribute starting with b
+        return False
+    if not any(attr.startswith('zip') or attr.startswith('addr') for attr in dir(account)): # no attribute starting with zip or addr
+        return False
+    if not hasattr(account, 'value') or not hasattr(account, 'name') or not hasattr(account, 'id'): # no attribute name, id and value,
+        return False
+    if not isinstance(account.name, str): # • name not being a string,
+        return False
+    if not isinstance(account.id, int): # • id not being an int,
+        return False
+    if not isinstance(account.value, float) and not isinstance(account.value, int): # • value not being an int or a float.
+        return False
+    return True
+# in the_bank.py
 class Bank(object):
     """The bank"""
     def __init__(self):
-        self.account = []
-
-    def add(self, account):
-        self.account.append(account)
-
-    def is_valide(self, account, amount, is_sender=False):
-        if type(account) == int or type(account) == str:
-            elem = [elem for elem in self.account if elem.id == account or elem.name == account]
-            if len(elem) != 1:
-                return False
-            elem = elem[0]
-        else:
+        self.accounts = []
+    def add(self, new_account):
+        """ Add new_account in the Bank
+        @new_account: Account() new account to append
+        @return True if success, False if an error occured
+        """
+        if not isinstance(new_account, Account):
             return False
-        attrs = dir(elem)
-        if (is_sender and elem.value < amount) or len(attrs) % 2 == 0 or any([e[0] == 'b' for e in attrs]) or (not any([e.startswith('zip') or e.startswith('addr') for e in attrs])) or (not all([e in attrs for e in ['name', 'id', 'value']])):
+        if any(new_account.name == account.name for account in self.accounts):
             return False
-        return elem
-
-        
+        self.accounts.append(new_account)
+        return True
 
     def transfer(self, origin, dest, amount):
+        """" Perform the fund transfer
+        @origin: str(name) of the first account
+        @dest: str(name) of the destination account
+        @amount: float(amount) amount to transfer
+        @return True if success, False if an error occured
         """
-            @origin:  int(id) or str(name) of the first account
-            @dest:    int(id) or str(name) of the destination account
-            @amount:  float(amount) amount to transfer
-            @return         True if success, False if an error occured
-        """
-        sender = self.is_valide(origin, amount, True)
-        receiver = self.is_valide(dest, amount)
-        if amount < 0 or not sender or not receiver:
+        if not isinstance(origin, str) or not isinstance(dest, str) or not isinstance(amount, (float, int)):
             return False
-        sender.give(amount)
-        receiver.transfer(amount)
+        if amount < 0:
+            return False
+        origin_account = next((account for account in self.accounts if account.name == origin), None)
+        dest_account = next((account for account in self.accounts if account.name == dest), None)
+        if origin_account is None or dest_account is None:
+            return False
+        if origin_account.value < amount:
+            return False
+        if not is_valid(origin_account) or not is_valid(dest_account):
+            return False
+        if origin_account == dest_account:
+            return True
+        origin_account.transfer(-amount)
+        dest_account.transfer(amount)
         return True
         
-
-
-    def fix_account(self, account):
+    def __try_fix_account(self, account):
+        """ try to fix account if corrupted
+        @account: Account() account to fix
+        @return True if success, False if an error occured
         """
-            fix the corrupted account
-            @account: int(id) or str(name) of the account
-            @return         True if success, False if an error occured
+        if len(dir(account)) % 2 == 0: # fix even number of attributes,
+            while len(dir(account)) % 2 == 0:
+                setattr(account, ''.join(random.choices(string.ascii_uppercase, k=4)), 0)
+        for attr in dir(account): # fix attribute starting with b
+            if attr.startswith('b'):
+                delattr(account, attr)
+        if not any(attr.startswith('zip') or attr.startswith('addr') for attr in dir(account)): # fix no attribute starting with zip or addr
+            setattr(account, 'zip' + ''.join(random.choices(string.ascii_uppercase, k=4)), 0)
+        if not hasattr(account, 'value'):
+            setattr(account, 'value', 0)
+        if not hasattr(account, 'name'):
+            setattr(account, 'name', '')
+        if not hasattr(account, 'id'): # no attribute name, id and value,
+            setattr(account, 'id', 0)
+        if not isinstance(account.name, str): # • name not being a string,
+            account.name = str(account.name)
+        if not isinstance(account.id, int): # id not being an int
+            _id = 0
+            ids = [account.id for account in self.accounts]
+            while _id in ids:
+                account.id += 1
+            account.id = _id
+        if not isinstance(account.value, float) and not isinstance(account.value, int): # • value not being an int or a float.
+            account.value = float(account.value)
+
+    def fix_account(self, name):
+        """ fix account associated to name if corrupted
+        @name: str(name) of the account
+        @return True if success, False if an error occured
         """
-        if type(account) == int or type(account) == str:
-            elem = [elem for elem in self.account if elem.id == account or elem.name == account]
-            if len(elem) != 1:
-                return False
-            elem = elem[0]
-        else:
+        if not isinstance(name, str):
             return False
-        for attr in dir(elem):
-            if attr[0] == 'b':
-                delattr(elem, attr)
-        if not any([e.startswith('zip') or e.startswith('addr') for e in dir(elem)]):
-            setattr(elem, 'zip_safe', '')
-        if not hasattr(elem, 'name'):
-            setattr(elem, 'name', 'default')
-        if not hasattr(elem, 'id'):
-            setattr(elem, 'id', Account.ID_COUNT)
-            account.ID_COUNT += 1
-        if not hasattr(elem, 'value'):
-            setattr(elem, 'value', 0)
-        if len(dict(elem) %2 == 0):
-            setattr(elem, ''.join(random.choices(string.ascii_uppercase , k=5)))
-            
-
-acc = Account('houssam', value=0, zip_check=10)
-acc1 = Account('test', value=0, zip_check=10)
-acc.transfer(8000)
-bank = Bank()
-
-bank.add(acc)
-bank.add(acc1)
-
-print(bank.transfer(acc, acc1, 150))
-
-print(bank.transfer('houssam', 2, 150))
-
-acc2 = Account('lol', value=0)
-bank.add(acc2)
-
-print(bank.transfer('houssam', 'lol', 150))
-
-
-acc3 = Account('lol1', value=0, zip_check=0 , bambolzed=42)
-bank.add(acc3)
-
-print(bank.transfer('houssam', 'lol1', 150))
+        account = next((account for account in self.accounts if account.name == name), None)
+        if account is None:
+            return False
+        if is_valid(account):
+            return True
+        while is_valid(account) is False:
+            try:
+                self.__try_fix_account(account)
+            except Exception as e:
+                return False
+        return True
