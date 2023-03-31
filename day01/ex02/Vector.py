@@ -19,7 +19,7 @@ class Vector:
             self.values = [[float(i)] for i in range(param)]
             self.shape = (param, 1)
         elif isinstance(param, tuple):
-            if not len(param) == 2 and not all(isinstance(elem, int) for elem in param):
+            if not len(param) == 2 or not all(isinstance(elem, int) for elem in param):
                 raise TypeError("param should be a tuple of two integers")
             if param[0] > param[1]:
                 raise ValueError("The first element of the tuple should be smaller than the second one")
@@ -61,6 +61,8 @@ class Vector:
     def __truediv__(self, other):
         if not isinstance(other, (int, float)):
             raise TypeError("other should be a number")
+        if other == 0:
+            raise ZeroDivisionError("Division by zero is not allowed")
         return Vector([[self.values[i][j] / other for j in range(self.shape[1])] for i in range(self.shape[0])])
     
     def __rtruediv__(self, other):
@@ -79,4 +81,7 @@ class Vector:
         return self.__mul__(other)
     
     def __str__(self) -> str:
+        return str(self.values)
+    
+    def __repr__(self) -> str:
         return str(self.values)

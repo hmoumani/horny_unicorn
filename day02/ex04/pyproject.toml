@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "my-minipack"
+version = "1.0.0"
+authors = [
+  { name="hmoumani", email="hmoumani@studnet.1337.ma" },
+]
+description = "Howto create a package in python."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = []
