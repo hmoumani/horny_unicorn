@@ -39,6 +39,8 @@ class CsvReader():
         # ... Your code here ...
         lines = []
         file_content = self.file.readlines()
+        if not file_content:
+            return []
         column_count = len(file_content[0].strip().split(self.sep))
         columns_length = [len(value) for value in file_content[1].strip().split(self.sep)]
         for line in file_content[1:]:
