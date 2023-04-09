@@ -43,17 +43,16 @@ class TinyStatistician:
         return float(TinyStatistician.var(x) ** 0.5)
 
 
-# TODO: remove the following after test:
-
-tstat = TinyStatistician()
-a = [1, 42, 300, 10, 59]
-print(tstat.mean(a))
-# Expected result: 82.4
-print(tstat.median(a))
-# Expected result: 42.0
-print(tstat.quartiles(a))
-# Expected result: [10.0, 59.0]
-print(tstat.var(a))
-# Expected result: 12279.439999999999
-print(tstat.std(a))
-# Expected result: 110.81263465868862
+if __name__ == '__main__':
+    tstat = TinyStatistician()
+    a = [1, 42, 300, 10, 59]
+    print(tstat.mean(a))
+    # Expected result: 82.4
+    print(tstat.median(a))
+    # Expected result: 42.0
+    print(tstat.quartiles(a))
+    # Expected result: [10.0, 59.0]
+    print(tstat.var(a))
+    # Expected result: 12279.439999999999
+    print(tstat.std(a))
+    # Expected result: 110.81263465868862
