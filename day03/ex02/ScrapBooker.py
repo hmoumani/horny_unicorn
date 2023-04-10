@@ -75,11 +75,48 @@ class ScrapBooker:
         This function should not raise any Exception.
         """
         try:
+            assert isinstance(array, np.ndarray)
+            assert isinstance(n, int)
+            assert isinstance(axis, int)
+            assert n > 0
+            assert axis == 0 or axis == 1
+            return np.concatenate([array] * n, axis)
+        except Exception:
+            return None
 
+    def mosaic(self, array, dim):
+        """
+        Makes a grid with multiple copies of the array. The dim argument specifies
+        the number of repetition along each dimensions.
+        Args:
+        -----
+        array: numpy.ndarray.
+        dim: tuple of 2 integers.
+        Return:
+        -------
+        new_arr: mosaic numpy.ndarray.
+        None (combinaison of parameters not compatible).
+        Raises:
+        -------
+        This function should not raise any Exception.
+        """
+        try:
+            assert isinstance(array, np.ndarray)
+            assert isinstance(dim, tuple)
+            assert len(dim) == 2
+            assert dim[0] > 0 and dim[1] > 0
+            return np.tile(array, dim)
+        except Exception:
+            return None
 
-# spb = ScrapBooker()
-# arr1 = np.arange(0,25).reshape(5,5)
-# print(spb.crop(arr1, (3,1),(1,0)))
+if __name__ == "__main__":
+    spb = ScrapBooker()
+    # arr1 = np.arange(0,25).reshape(5,5)
+    # print(spb.crop(arr1, (3,1),(1,0)))
 
-# arr2 = np.array("A B C D E F G H I".split() * 6).reshape(-1,9)
-# print(spb.thin(arr2,3,0))
+    # arr2 = np.array("A B C D E F G H I".split() * 6).reshape(-1,9)
+    # print(spb.thin(arr2,3,0))
+
+    arr3 = np.array([[1, 2, 3],[1, 2, 3],[1, 2, 3]])
+
+    print(spb.mosaic(arr3, (1, 1)))
