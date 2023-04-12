@@ -1,14 +1,17 @@
 from FileLoader import FileLoader
 
 def how_many_medals(df, name):
-    selected_name_df = df[df['Name'] == name]
     result = {}
-    group_by_year = selected_name_df.groupby('Year')
-    for group in group_by_year:
-        result[group[0]] = {}
-        result[group[0]]['G'] = len(group[1][group[1]['Medal'] == 'Gold'])
-        result[group[0]]['S'] = len(group[1][group[1]['Medal'] == 'Silver'])
-        result[group[0]]['B'] = len(group[1][group[1]['Medal'] == 'Bronze'])
+    try:
+        selected_name_df = df[df['Name'] == name]
+        group_by_year = selected_name_df.groupby('Year')
+        for group in group_by_year:
+            result[group[0]] = {}
+            result[group[0]]['G'] = len(group[1][group[1]['Medal'] == 'Gold'])
+            result[group[0]]['S'] = len(group[1][group[1]['Medal'] == 'Silver'])
+            result[group[0]]['B'] = len(group[1][group[1]['Medal'] == 'Bronze'])
+    except Exception:
+        pass
     return result
 
 if __name__ == "__main__":
