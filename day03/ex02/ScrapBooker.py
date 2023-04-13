@@ -1,6 +1,9 @@
 import numpy as np
 
 class ScrapBooker:
+    def __init__(self):
+        pass
+    
     def crop(self, array, dim, position=(0,0)):
         """
         Crops the image as a rectangle via dim arguments (being the new height
@@ -111,12 +114,12 @@ class ScrapBooker:
 
 if __name__ == "__main__":
     spb = ScrapBooker()
-    # arr1 = np.arange(0,25).reshape(5,5)
-    # print(spb.crop(arr1, (3,1),(1,0)))
+    arr1 = np.arange(0,25).reshape(5,5)
+    print(spb.crop(arr1, (3,1),(1,0)))
 
-    # arr2 = np.array("A B C D E F G H I".split() * 6).reshape(-1,9)
-    # print(spb.thin(arr2,3,0))
+    arr2 = np.array("A B C D E F G H I".split() * 6).reshape(-1,9)
+    print(spb.thin(arr2,3,0))
 
     arr3 = np.array([[1, 2, 3],[1, 2, 3],[1, 2, 3]])
 
-    print(spb.mosaic(arr3, (1, 1)))
+    print(spb.juxtapose(arr3, 3, 1))

@@ -1,10 +1,13 @@
 from FileLoader import FileLoader
 
 def youngest_fellah(df, year):
-    df = df[df['Year'] == year]
-    male_min = df[df['Sex'] == 'M']['Age'].min()
-    female_min = df[df['Sex'] == 'F']['Age'].min()
-    return {"f": female_min, "m": male_min}
+    try:    
+        df = df[df['Year'] == year]
+        male_min = df[df['Sex'] == 'M']['Age'].min()
+        female_min = df[df['Sex'] == 'F']['Age'].min()
+        return {"f": female_min, "m": male_min}
+    except Exception:
+        return None
     
 if __name__ == "__main__":
     loader = FileLoader()

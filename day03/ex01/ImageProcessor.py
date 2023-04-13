@@ -9,7 +9,7 @@ class ImageProcessor:
         try:
             assert isinstance(path, str)
             assert path.endswith(".png")
-            img = Image.open(path).convert('RGB')
+            img = Image.open(path)
             print("Loading image of dimensions {} x {}".format(img.size[0], img.size[1]))
             return np.array(img)
         except Exception as e:
@@ -34,7 +34,7 @@ class ImageProcessor:
 if __name__ == "__main__":
     imp = ImageProcessor()
 
-    arr = imp.load("../elon_canaGAN.png")
+    arr = imp.load("../42AI.png")
     # Output :
 
     imp.display(arr)

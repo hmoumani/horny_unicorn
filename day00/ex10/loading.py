@@ -38,22 +38,21 @@ def ft_progress(lst):
         print('{:.2f}'.format(scnd) + 's', end='\r')
         yield i
 
-if __name__ == "__main__":
-    listy = range(3333)
-    ret = 0
-    for elem in ft_progress(listy):
-        ret += elem
-        sleep(0.005)
-    print()
-    print(ret)
-
-    listy = range(1000)
-    ret = 0
-    for elem in ft_progress(listy):
-        ret += (elem + 3) % 5
-        sleep(0.01)
-    print()
-    print(ret)
+# if __name__ == "__main__":
+#     listy = range(3333)
+#     ret = 0
+#     for elem in ft_progress(listy):
+#         ret += elem
+#         sleep(0.005)
+#     print()
+#     print(ret)
+#     listy = range(1000)
+#     ret = 0
+#     for elem in ft_progress(listy):
+#         ret += (elem + 3) % 5
+#         sleep(0.01)
+#     print()
+#     print(ret)
     
     
 # current / total * size

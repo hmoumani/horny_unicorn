@@ -75,9 +75,6 @@ class KmeansClustering:
             return predection_vector
         except Exception as e:
             return print(e)
-# ded [189.35744874  95.94145755   0.80495539]
-# ded [195.79102888  77.64479262   0.78798959]
-# ded [174.30357777  77.24764978   0.94225128]
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -98,10 +95,7 @@ if __name__ == "__main__":
         X = df.to_numpy()
         predictions_results = k_means.fit(X)
         if predictions_results is not None and args.ncentroid == 4:
-            # fig, axs = plt.subplots(1, 2, figsize=(10, 5))
             fig = plt.figure(figsize=(25, 10))
-            # fig2 = plt.figure()
-            # ax_count = fig2.add_subplot(111)
             ax_k_means = fig.add_subplot(1, 2, 1, projection='3d')
             ax_count = fig.add_subplot(1, 2, 2)
             clusters_number = predictions_results[np.argsort(predictions_results[:, 0])]
@@ -115,18 +109,8 @@ if __name__ == "__main__":
                 # create a bar chart of the counts
                 ax_count.bar(unique, counts, color=color)
                 ax_k_means.scatter(k_means.centroids[:i, 0], k_means.centroids[:i, 1], k_means.centroids[:i, 2], marker='X', c='black', s=100)
-            print(k_means.centroids)
         else:
 
-        # if predictions_results is not None and args.ncentroid == 4:
-        #     new_arr = np.zeros((predictions_results.shape[0], 2))
-        #     # set the first column in the new array to be the same as the old array
-        #     new_arr[:, 0] = predictions_results[:, 0]
-        #     # calculate the mean of the remaining columns in the old array for each row and set them in the new array
-        #     new_arr[:, 1:] = np.mean(predictions_results[:, 1:], axis=1).reshape(-1, 1)
-        #     for i in range(4):
-        #         plt.scatter(new_arr[:, 0], new_arr[:, 1], c=new_arr[:, 0])
-        #     print(new_arr)
         
             groups_indexs = predictions_results[:, 0]
             
@@ -134,12 +118,6 @@ if __name__ == "__main__":
 
             # create a bar chart of the counts
             plt.bar(unique, counts)
-
-        # set labels and title
-        # axs[-1].xlabel('Element')
-        # axs[-1].ylabel('Count')
-
-        # show the plot
 
         plt.show()
 

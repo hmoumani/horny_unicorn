@@ -1,6 +1,6 @@
 from vector import Vector
 
-######## initialize a vector tests ########
+# initialize a vector tests #
 
 # using a list of lists and a list of floats
 
@@ -10,9 +10,9 @@ v1 = Vector([[float(i) for i in range(10)]])
 
 # v2 = Vector([[1., 2., 3., 4., 'q']]) # should raise an error
 
-# v3 = Vector([[1., 2., 3., 4., 5.], [1., 2., 3., 4., 5.]]) # should raise an error
+# v3 = Vector([[1., 2., 3., 4., 5.], [1., 2., 3., 4., 5.]]) # raise an error
 
-# using a tuple for range 
+# using a tuple for range
 
 v4 = Vector((0, 10))
 
@@ -32,7 +32,7 @@ v8 = Vector(1)
 
 # v9 = Vector(-10) # should raise an error
 
-######## math operations ########
+# math operations #
 
 # dot product
 
@@ -102,4 +102,4 @@ print("v1 / 2: ", v1 / 2)
 
 # print("2 / v1: ", 2 / v1) # should raise an error
 
-print("v1 / v1: ", v1 / v1)
+# print("v1 / v1: ", v1 / v1) # should raise an error, other should be an int

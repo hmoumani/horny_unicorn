@@ -20,39 +20,89 @@ class MyPlotLib:
 
     @staticmethod
     def histogram(data, features):
-        data = data[features].dropna().select_dtypes(include=[np.number])
-        fig, axs = MyPlotLib.__get_figures(len(features))
-        for i, feature in enumerate(features):
-            sns.histplot(data=data, x=feature, ax=axs[i // 4, i % 4] if len(features) > 4 else axs[i])
-            (axs[i // 4, i % 4] if len(features) > 4 else axs[i]).legend([feature], fontsize="x-small")
-        plt.show()
+        try:
+            if not features:
+                return None
+            features = list(set(features))
+            data = data[features].dropna().select_dtypes(include=[np.number])
+            fig, axs = MyPlotLib.__get_figures(len(features))
+            if len(features) > 1:
+                for i, feature in enumerate(features):
+                    sns.histplot(data=data, x=feature, ax=(axs[i // 4, i % 4] if len(features) > 4 else axs[i]))
+                    (axs[i // 4, i % 4] if len(features) > 4 else axs[i]).legend([feature], fontsize="x-small")
+            else:
+                sns.histplot(data=data, x=features[0], ax=axs)
+                axs.legend(features, fontsize="x-small")
+            plt.show()
+        except Exception:
+            return None
 
     @staticmethod
     def density(data, features):
-        data = data[features].dropna().select_dtypes(include=[np.number])
-        for i, feature in enumerate(features):
-            sns.kdeplot(data=data, x=feature)
-            plt.legend(features, fontsize="x-small")
-        plt.show()
+        try:
+            if not features:
+                return None
+            features = list(set(features))
+            data = data[features].dropna().select_dtypes(include=[np.number])
+            for i, feature in enumerate(features):
+                sns.kdeplot(data=data, x=feature)
+                plt.legend(features, fontsize="x-small")
+            plt.show()
+        except Exception:
+            return None
 
     @staticmethod
     def pair_plot(data, features):
-        data = data[features].dropna().select_dtypes(include=[np.number])
-        sns.pairplot(data=data, vars=features)
-        plt.show()
+        try:
+            if not features:
+                return None
+            features = list(set(features))
+            data = data[features].dropna().select_dtypes(include=[np.number])
+            sns.pairplot(data=data, vars=features)
+            plt.show()
+        except Exception:
+            return None
 
     @staticmethod
     def box_plot(data, features):
-        data = data[features].dropna().select_dtypes(include=[np.number])
-        sns.boxplot(data=data, orient="v")
-        plt.legend(features, fontsize="x-small")
-        plt.show()
+        try:
+            if not features:
+                return None
+            features = list(set(features))
+            data = data[features].dropna().select_dtypes(include=[np.number])
+            sns.boxplot(data=data, orient="v")
+            plt.legend(features, fontsize="x-small")
+            plt.show()
+        except Exception:
+            return None
 
 if __name__ == "__main__":
     mpl = MyPlotLib()
-    features = ["Height", "Weight", "Age", "Year"]
+    features = []
     data = pd.read_csv("../athlete_events.csv")
     mpl.histogram(data, features)
     mpl.density(data, features)
     mpl.pair_plot(data, features)
     mpl.box_plot(data, features)
+    
+    features = ["Height"]
+    data = pd.read_csv("../athlete_events.csv")
+    mpl.histogram(data, features)
+    mpl.density(data, features)
+    mpl.pair_plot(data, features)
+    mpl.box_plot(data, features)
+    
+    features = ["Height", "Weight"]
+    data = pd.read_csv("../athlete_events.csv")
+    mpl.histogram(data, features)
+    mpl.density(data, features)
+    mpl.pair_plot(data, features)
+    mpl.box_plot(data, features)
+    
+    features = ["Height", "Weight", "Age"]
+    data = pd.read_csv("../athlete_events.csv")
+    mpl.histogram(data, features)
+    mpl.density(data, features)
+    mpl.pair_plot(data, features)
+    mpl.box_plot(data, features)
+    

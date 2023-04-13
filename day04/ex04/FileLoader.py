@@ -10,12 +10,15 @@ class FileLoader:
             return None
         
     def display(self, df, n):
-        if isinstance(n, int) == False:
-            return
-        if n < 0:
-            print(df.tail(-n))
-        else:
-            print(df.head(n))
+        try:
+            if isinstance(n, int) == False:
+                return
+            if n < 0:
+                print(df.tail(-n))
+            else:
+                print(df.head(n))
+        except Exception:
+            return None
             
 if __name__ == "__main__":
     file_loader = FileLoader()

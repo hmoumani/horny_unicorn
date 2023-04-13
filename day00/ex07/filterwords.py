@@ -11,4 +11,6 @@ except Exception:
     print("ERROR")
     exit()
 
-print([elem.strip(string.punctuation) for elem in sys.argv[1].split() if len(elem.strip(string.punctuation)) > int(sys.argv[2])])
+sys.argv[1] = ''.join([c for c in sys.argv[1] if c not in string.punctuation])
+
+print([elem for elem in sys.argv[1].split() if len(elem) > int(sys.argv[2])])

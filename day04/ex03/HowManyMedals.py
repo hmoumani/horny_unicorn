@@ -24,3 +24,7 @@ if __name__ == "__main__":
 
     print(how_many_medals(data, 'Kristin Otto'))
     #  the output is: "{1988: {'G': 6, 'S': 0, 'B': 0}}"
+    
+    print(how_many_medals(data, 'Kjetil Andr Aamodt'))
+    #  the output is: {1992: {'G': 1, 'S': 0, 'B': 1}, 1994: {'G': 0, 'S': 2, 'B': 1}, 
+    # 1998: {'G': 0, 'S': 0, 'B': 0}, 2002: {'G': 2, 'S': 0, 'B': 0}, 2006: {'G': 1, 'S': 0, 'B': 0}}

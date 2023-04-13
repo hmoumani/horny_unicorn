@@ -1,12 +1,14 @@
 from FileLoader import FileLoader
 
 def proportion_by_sport(df, year, sport, gender):
-    unique_df = df.drop_duplicates(subset=['Name', 'Year'])
-    selected_year_df = unique_df[unique_df['Year'] == year]
-    selected_gender_df = selected_year_df[selected_year_df['Sex'] == gender]
-    selected_sport_df = selected_gender_df[selected_gender_df['Sport'] == sport]
-    return round(len(selected_sport_df) / len(selected_gender_df) * 100, 1)
-
+    try:
+        unique_df = df.drop_duplicates(subset=['Name', 'Year'])
+        selected_year_df = unique_df[unique_df['Year'] == year]
+        selected_gender_df = selected_year_df[selected_year_df['Sex'] == gender]
+        selected_sport_df = selected_gender_df[selected_gender_df['Sport'] == sport]
+        return round(len(selected_sport_df) / len(selected_gender_df) * 100, 1)
+    except Exception:
+        return None
 
 if __name__ == "__main__":
     loader = FileLoader()
